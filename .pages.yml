@@ -7,13 +7,14 @@ content:
     type: collection
     path: content/works
     format: json
-    filename: "{id}.json"
+    filename: "{fields.id}.json"
     view:
       primary: title
       fields: [title, category, year, published, order]
       search: [title, category, description]
       sort: [order, title, category, year, published]
       default:
+        search: ""
         sort: order
         order: asc
     fields:
