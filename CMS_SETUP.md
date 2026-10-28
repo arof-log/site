@@ -12,7 +12,7 @@ Repository: https://github.com/arof-log/site (branch `main`)
 - Use Works to add, edit, delete, search and sort individual entries.
 - IDs should be unique lowercase letters/numbers/hyphens, and are used for file names.
 - Set `published` off to hide an entry, and adjust `order` to control card order.
-- The `featured` flag is available in CMS for later use; the current Works gallery shows all published records.
+- The `featured` flag controls whether a published entry appears in the current Works gallery.
 - Category choices reflect existing categories.
 - Original missing values (`year`, `tags`) are intentionally blank.
 
