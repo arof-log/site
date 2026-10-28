@@ -85,7 +85,7 @@ Fancybox.bind("[data-fancybox]", {
       } catch { return ''; }
     };
     const fragment = document.createDocumentFragment();
-    works.filter(w => w.published !== false).sort((a,b) => Number(a.order)-Number(b.order)).forEach((w,i) => {
+    works.filter(w => w.published !== false && w.featured !== false).sort((a,b) => Number(a.order)-Number(b.order)).forEach((w,i) => {
       const item = element('div','item');
       const card = element('a','work-card');
       const link = safeUrl(w.url);
