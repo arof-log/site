@@ -59,3 +59,54 @@ const works_swiper = new Swiper('#works_inner', {
 Fancybox.bind("[data-fancybox]", {
   // 옵션 (필요 시)
 });
+
+/* CMS Works: render generated JSON while keeping original cards as offline fallback. */
+(async function renderCmsWorks() {
+  const list = document.querySelector('#works_inner .list');
+  if (!list) return;
+  try {
+    const response = await fetch(new URL('./works.json', document.baseURI), {cache: 'no-cache'});
+    if (!response.ok) throw new Error('Works JSON not yet deployed');
+    const works = await response.json();
+    if (!Array.isArray(works)) throw new Error('Invalid Works JSON');
+    const element = (tag, cls, value) => {
+      const el = document.createElement(tag);
+      if (cls) el.className = cls;
+      if (value !== undefined) el.textContent = String(value);
+      return el;
+    };
+    const safeUrl = value => {
+      if (!value) return '';
+      try {
+        const raw = String(value);
+        const candidate = raw.startsWith('/images/') ? raw.slice(1) : raw;
+        const url = new URL(candidate, document.baseURI);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+      } catch { return ''; }
+    };
+    const fragment = document.createDocumentFragment();
+    works.filter(w => w.published !== false).sort((a,b) => Number(a.order)-Number(b.order)).forEach((w,i) => {
+      const item = element('div','item');
+      const card = element('a','work-card');
+      const link = safeUrl(w.url);
+      if (link) {
+        card.href = link;
+        card.dataset.fancybox = 'portfolio';
+        card.dataset.type = 'iframe';
+      }
+      const thumb = element('div','thumb-box'), img = document.createElement('img');
+      img.src = safeUrl(w.image);
+      img.alt = w.title || '';
+      img.loading = 'lazy';
+      thumb.append(img);
+      const meta = element('div','meta-info'), top = element('div','top-row');
+      top.append(element('span','index-num','No. '+String(i+1).padStart(2,'0')), element('span','category-stamp',w.category||''));
+      meta.append(top,element('h3','project-title',w.title||''),element('p','project-desc',w.description||''));
+      card.append(thumb,meta); item.append(card); fragment.append(item);
+    });
+    list.replaceChildren(fragment);
+    works_swiper.update();
+  } catch (error) {
+    console.warn('CMS Works unavailable; using original HTML cards:', error);
+  }
+})();
