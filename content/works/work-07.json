@@ -1,0 +1,13 @@
+{
+  "id": "work-07",
+  "title": "Folding Guide",
+  "category": "Leaflet",
+  "year": "",
+  "image": "https://picsum.photos/900/620?random=17",
+  "description": "3단 접지(Z-fold) 전개 순서에 맞춘 입체적 동선 안내와 인포메이션 리플릿.",
+  "tags": [],
+  "url": "detail-leaflet.html",
+  "published": true,
+  "featured": true,
+  "order": 7
+}
