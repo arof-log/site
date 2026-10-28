@@ -1,0 +1,58 @@
+media:
+  input: images
+  output: /images
+content:
+  - name: works
+    label: Works
+    type: collection
+    path: content/works
+    format: json
+    filename: "{id}.json"
+    view:
+      primary: title
+      fields: [title, category, year, published, order]
+      search: [title, category, description]
+      sort: [order, title, category, year, published]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: id
+        label: 작품 ID
+        type: string
+        required: true
+        pattern: "^[a-z0-9-]+$"
+      - name: title
+        label: 작품명
+        type: string
+        required: true
+      - name: category
+        label: 카테고리
+        type: select
+        options:
+          values: [Video Editing, Motion Graphics, Poster Design, Branding, Card News, Brochure, Leaflet]
+      - name: year
+        label: 제작 연도
+        type: string
+      - name: image
+        label: 대표 이미지
+        type: image
+      - name: description
+        label: 작품 설명
+        type: text
+      - name: tags
+        label: 태그
+        type: string
+        list: true
+      - name: url
+        label: 상세페이지 주소
+        type: string
+      - name: published
+        label: 공개 여부
+        type: boolean
+      - name: featured
+        label: 메인 노출
+        type: boolean
+      - name: order
+        label: 노출 순서
+        type: number
