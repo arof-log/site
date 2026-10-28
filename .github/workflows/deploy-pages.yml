@@ -1,0 +1,33 @@
+name: Deploy Pages CMS portfolio
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Build static site and public Works data
+        run: |
+          mkdir -p _site
+          cp -a index.html css js fonts images _site/
+          find . -maxdepth 1 -type f -name 'detail-*.html' -exec cp {} _site/ \;
+          python3 scripts/build_works.py
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
