@@ -1,0 +1,13 @@
+{
+  "id": "work-03",
+  "title": "Exhibition Visual",
+  "category": "Poster Design",
+  "year": "",
+  "image": "https://picsum.photos/900/620?random=13",
+  "description": "종이의 촉감과 대비를 고려한 활판 인쇄풍 아트 페스티벌 메인 포스터.",
+  "tags": [],
+  "url": "detail-poster.html",
+  "published": true,
+  "featured": true,
+  "order": 3
+}
